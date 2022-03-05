@@ -7,13 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		961FC63F27D2DAC800C37A94 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 961FC63E27D2DAC800C37A94 /* main.m */; };
-		96D3536627D2EADD00B050D4 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3536527D2EADD00B050D4 /* File.swift */; };
-		96D3536827D2F61400B050D4 /* sss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3536727D2F61400B050D4 /* sss.swift */; };
+		96D3537627D2F86700B050D4 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3537527D2F86700B050D4 /* main.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		961FC63927D2DAC800C37A94 /* CopyFiles */ = {
+		96D3537027D2F86700B050D4 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -25,15 +23,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		961FC63B27D2DAC800C37A94 /* gcmidi-proj */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "gcmidi-proj"; sourceTree = BUILT_PRODUCTS_DIR; };
-		961FC63E27D2DAC800C37A94 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		96D3536227D2DC3A00B050D4 /* gcmidi-proj-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "gcmidi-proj-Bridging-Header.h"; sourceTree = "<group>"; };
-		96D3536527D2EADD00B050D4 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
-		96D3536727D2F61400B050D4 /* sss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sss.swift; sourceTree = "<group>"; };
+		96D3537227D2F86700B050D4 /* i hate xcode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "i hate xcode"; sourceTree = BUILT_PRODUCTS_DIR; };
+		96D3537527D2F86700B050D4 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		96D3539927D2FB6C00B050D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		961FC63827D2DAC800C37A94 /* Frameworks */ = {
+		96D3536F27D2F86700B050D4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -43,69 +39,67 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		961FC63227D2DAC800C37A94 = {
+		96D3536927D2F86700B050D4 = {
 			isa = PBXGroup;
 			children = (
-				961FC63D27D2DAC800C37A94 /* gcmidi-proj */,
-				961FC63C27D2DAC800C37A94 /* Products */,
+				96D3539927D2FB6C00B050D4 /* Info.plist */,
+				96D3537427D2F86700B050D4 /* i hate xcode */,
+				96D3537327D2F86700B050D4 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		961FC63C27D2DAC800C37A94 /* Products */ = {
+		96D3537327D2F86700B050D4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				961FC63B27D2DAC800C37A94 /* gcmidi-proj */,
+				96D3537227D2F86700B050D4 /* i hate xcode */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		961FC63D27D2DAC800C37A94 /* gcmidi-proj */ = {
+		96D3537427D2F86700B050D4 /* i hate xcode */ = {
 			isa = PBXGroup;
 			children = (
-				961FC63E27D2DAC800C37A94 /* main.m */,
-				96D3536527D2EADD00B050D4 /* File.swift */,
-				96D3536727D2F61400B050D4 /* sss.swift */,
-				96D3536227D2DC3A00B050D4 /* gcmidi-proj-Bridging-Header.h */,
+				96D3537527D2F86700B050D4 /* main.swift */,
 			);
-			path = "gcmidi-proj";
+			path = "i hate xcode";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		961FC63A27D2DAC800C37A94 /* gcmidi-proj */ = {
+		96D3537127D2F86700B050D4 /* i hate xcode */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 961FC64227D2DAC800C37A94 /* Build configuration list for PBXNativeTarget "gcmidi-proj" */;
+			buildConfigurationList = 96D3537927D2F86700B050D4 /* Build configuration list for PBXNativeTarget "i hate xcode" */;
 			buildPhases = (
-				961FC63727D2DAC800C37A94 /* Sources */,
-				961FC63827D2DAC800C37A94 /* Frameworks */,
-				961FC63927D2DAC800C37A94 /* CopyFiles */,
+				96D3536E27D2F86700B050D4 /* Sources */,
+				96D3536F27D2F86700B050D4 /* Frameworks */,
+				96D3537027D2F86700B050D4 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "gcmidi-proj";
-			productName = "gcmidi-proj";
-			productReference = 961FC63B27D2DAC800C37A94 /* gcmidi-proj */;
+			name = "i hate xcode";
+			productName = "i hate xcode";
+			productReference = 96D3537227D2F86700B050D4 /* i hate xcode */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		961FC63327D2DAC800C37A94 /* Project object */ = {
+		96D3536A27D2F86700B050D4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
-					961FC63A27D2DAC800C37A94 = {
+					96D3537127D2F86700B050D4 = {
 						CreatedOnToolsVersion = 13.2.1;
-						LastSwiftMigration = 1320;
 					};
 				};
 			};
-			buildConfigurationList = 961FC63627D2DAC800C37A94 /* Build configuration list for PBXProject "gcmidi-proj" */;
+			buildConfigurationList = 96D3536D27D2F86700B050D4 /* Build configuration list for PBXProject "i hate xcode" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -113,31 +107,29 @@
 				en,
 				Base,
 			);
-			mainGroup = 961FC63227D2DAC800C37A94;
-			productRefGroup = 961FC63C27D2DAC800C37A94 /* Products */;
+			mainGroup = 96D3536927D2F86700B050D4;
+			productRefGroup = 96D3537327D2F86700B050D4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				961FC63A27D2DAC800C37A94 /* gcmidi-proj */,
+				96D3537127D2F86700B050D4 /* i hate xcode */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		961FC63727D2DAC800C37A94 /* Sources */ = {
+		96D3536E27D2F86700B050D4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				961FC63F27D2DAC800C37A94 /* main.m in Sources */,
-				96D3536627D2EADD00B050D4 /* File.swift in Sources */,
-				96D3536827D2F61400B050D4 /* sss.swift in Sources */,
+				96D3537627D2F86700B050D4 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		961FC64027D2DAC800C37A94 /* Debug */ = {
+		96D3537727D2F86700B050D4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -193,10 +185,12 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		961FC64127D2DAC800C37A94 /* Release */ = {
+		96D3537827D2F86700B050D4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -245,42 +239,29 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
 		};
-		961FC64327D2DAC800C37A94 /* Debug */ = {
+		96D3537A27D2F86700B050D4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F65W3J85C2;
 				ENABLE_HARDENED_RUNTIME = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "gcmidi-proj/gcmidi-proj-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
-		961FC64427D2DAC800C37A94 /* Release */ = {
+		96D3537B27D2F86700B050D4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F65W3J85C2;
 				ENABLE_HARDENED_RUNTIME = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "gcmidi-proj/gcmidi-proj-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -288,25 +269,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		961FC63627D2DAC800C37A94 /* Build configuration list for PBXProject "gcmidi-proj" */ = {
+		96D3536D27D2F86700B050D4 /* Build configuration list for PBXProject "i hate xcode" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				961FC64027D2DAC800C37A94 /* Debug */,
-				961FC64127D2DAC800C37A94 /* Release */,
+				96D3537727D2F86700B050D4 /* Debug */,
+				96D3537827D2F86700B050D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		961FC64227D2DAC800C37A94 /* Build configuration list for PBXNativeTarget "gcmidi-proj" */ = {
+		96D3537927D2F86700B050D4 /* Build configuration list for PBXNativeTarget "i hate xcode" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				961FC64327D2DAC800C37A94 /* Debug */,
-				961FC64427D2DAC800C37A94 /* Release */,
+				96D3537A27D2F86700B050D4 /* Debug */,
+				96D3537B27D2F86700B050D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 961FC63327D2DAC800C37A94 /* Project object */;
+	rootObject = 96D3536A27D2F86700B050D4 /* Project object */;
 }

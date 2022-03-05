@@ -56,105 +56,141 @@ void die(char *errmsg) {
 }
 
 void attempt(OSStatus result, char* errmsg) {
-  if (result != noErr) die(errmsg);
+    if (result != noErr) {
+        die(errmsg);
+    }
 }
 
+/**
+ Setup `device` variable with information about an hid_element
+ */
 void add_hid_element(const void* v_element, void* ignored) {
   IOHIDElementRef element_handle = (IOHIDElementRef)v_element;
-  if (!element_handle) die("invalid element");
-  if (IOHIDElementGetUsagePage(element_handle) != kHIDPage_GenericDesktop) return;
+    if (!element_handle) {
+        die("invalid element");
+    }
+    // doesn't match our criteria
+    if (IOHIDElementGetUsagePage(element_handle) != kHIDPage_GenericDesktop) {
+        return;
+    }
 
   IOHIDElementType element_type = IOHIDElementGetType(element_handle);
   if (element_type == kIOHIDElementTypeInput_Misc ||
       element_type == kIOHIDElementTypeInput_Button ||
       element_type == kIOHIDElementTypeInput_Axis) {
-    struct Element* element;
-      printf("%d\n", IOHIDElementGetUsage(element_handle));
-    switch (IOHIDElementGetUsage(element_handle)) {
-    case kHIDUsage_GD_X:
-    case kHIDUsage_GD_Y:
-    case kHIDUsage_GD_Z:
-    case kHIDUsage_GD_Rx:
-    case kHIDUsage_GD_Ry:
-    case kHIDUsage_GD_Rz:
-    case kHIDUsage_GD_Slider:
-    case kHIDUsage_GD_Dial:
-    case kHIDUsage_GD_Wheel:
-      if (device.n_axes >= MAX_AXES - 1) die("too many axes");
+      struct Element* element;
+      printf("%x\n", IOHIDElementGetUsage(element_handle));
+      switch (IOHIDElementGetUsage(element_handle)) {
+          case kHIDUsage_GD_X:
+          case kHIDUsage_GD_Y:
+          case kHIDUsage_GD_Z:
+          case kHIDUsage_GD_Rx:
+          case kHIDUsage_GD_Ry:
+          case kHIDUsage_GD_Rz:
+          case kHIDUsage_GD_Slider:
+          case kHIDUsage_GD_Dial:
+          case kHIDUsage_GD_Wheel:
+              if (device.n_axes >= MAX_AXES - 1) {
+                  die("too many axes");
+              }
 
-      element = &device.axes[device.n_axes++];
-      element->handle = element_handle;
-      element->last_value = 0;
+              element = &device.axes[device.n_axes++];
+              element->handle = element_handle;
+              element->last_value = 0;
     }
-  } else if (element_type == kIOHIDElementTypeCollection) {
-    CFArrayRef elements = IOHIDElementGetChildren(element_handle);
-    if (!elements) die("get elements in collection");
+    // if we get multiple devices, call this function again on each of them
+    } else if (element_type == kIOHIDElementTypeCollection) {
+        CFArrayRef elements = IOHIDElementGetChildren(element_handle);
+        if (!elements) {
+            die("get elements in collection");
+        }
 
-    CFArrayApplyFunction(
-      elements,
-      (CFRange) { 0, CFArrayGetCount(elements) },
-      add_hid_element, NULL);
-  }
+        CFArrayApplyFunction(
+                             elements,
+                             (CFRange) { 0, CFArrayGetCount(elements) },
+                             add_hid_element, NULL);
+    }
 }
 
+/**
+ Gets the elements that match our requirements and adds them via `add_hid_element`
+ */
 void gc_added_callback(void *ctx,
                        IOReturn res,
                        void *sender,
                        IOHIDDeviceRef device_handle) {
-  if (device.handle) {
-    printf("ignoring duplicate added call\n");
-    return;
-  }
-  device.handle = device_handle;
+    if (device.handle) {
+        printf("ignoring duplicate added call\n");
+        return;
+    }
+    device.handle = device_handle;
 
-  CFArrayRef elements = IOHIDDeviceCopyMatchingElements(device.handle, NULL, kIOHIDOptionsTypeNone);
-  if (!elements) die("get elements");
+    CFArrayRef elements = IOHIDDeviceCopyMatchingElements(device.handle, NULL, kIOHIDOptionsTypeNone);
+    if (!elements) {
+        die("get elements");
+    }
 
-  CFArrayApplyFunction(
-    elements,
-    (CFRange) { 0, CFArrayGetCount(elements) },
-    add_hid_element, NULL);
+    // add every element that matches our criteria
+    CFArrayApplyFunction(
+                         elements,
+                         (CFRange) { 0, CFArrayGetCount(elements) },
+                         add_hid_element,
+                         NULL);
 }
 
-void setup_gc() {
-  device.handle = NULL;
-  device.n_axes = 0;
+/**
+ This will look for a game controller device specified by: kHIDUsage_GD_GamePad
+ */
+void setup_gc(void) {
+    device.handle = NULL;
+    device.n_axes = 0;
 
-  hidman = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDOptionsTypeNone);
-  attempt(IOHIDManagerOpen(hidman, kIOHIDOptionsTypeNone),
-          "opening iohidmanager");
-  if (!hidman) die("couldn't allocate hidmanager");
+    hidman = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDOptionsTypeNone);
+    attempt(IOHIDManagerOpen(hidman, kIOHIDOptionsTypeNone), "opening iohidmanager");
+    if (!hidman) {
+        die("couldn't allocate hidmanager");
+    }
 
-  const void *k[2] = {
-    (void*) CFSTR(kIOHIDDeviceUsagePageKey),
-    (void*) CFSTR(kIOHIDDeviceUsageKey)
-  };
-  const void *v[2] = {
-    (void*)CFNumberCreate(kCFAllocatorDefault,
-                          kCFNumberIntType,
-                          &hid_page),
-    (void*)CFNumberCreate(kCFAllocatorDefault,
-                          kCFNumberIntType,
-                          &hid_usage)
-  };
-  if (!v[0] || !v[1]) die("allocating numbers for usage pages");
+    const void *keys[2] = {
+        (void*) CFSTR(kIOHIDDeviceUsagePageKey),
+        (void*) CFSTR(kIOHIDDeviceUsageKey)
+    };
+    
+    const void *values[2] = {
+        (void*)CFNumberCreate(kCFAllocatorDefault,
+                              kCFNumberIntType,
+                              &hid_page),
+        (void*)CFNumberCreate(kCFAllocatorDefault,
+                              kCFNumberIntType,
+                              &hid_usage)
+    };
+    
+    if (!values[0] || !values[1]) {
+        die("allocating numbers for usage pages");
+    }
 
-  CFDictionaryRef deviceMatcher = CFDictionaryCreate(
-      kCFAllocatorDefault, k, v, 2,
-      &kCFTypeDictionaryKeyCallBacks,
-      &kCFTypeDictionaryValueCallBacks);
-  if (!deviceMatcher) die("create dictionary");
+    CFDictionaryRef deviceMatcher = CFDictionaryCreate(kCFAllocatorDefault,
+                                                       keys,
+                                                       values,
+                                                       2,
+                                                       &kCFTypeDictionaryKeyCallBacks,
+                                                       &kCFTypeDictionaryValueCallBacks);
+    
+    if (!deviceMatcher) {
+        die("create dictionary");
+    }
 
-  IOHIDManagerSetDeviceMatching(hidman, deviceMatcher);
-  IOHIDManagerRegisterDeviceMatchingCallback(hidman, gc_added_callback, NULL);
-  IOHIDManagerScheduleWithRunLoop(hidman, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+    IOHIDManagerSetDeviceMatching(hidman, deviceMatcher);
+    IOHIDManagerRegisterDeviceMatchingCallback(hidman, gc_added_callback, NULL);
+    IOHIDManagerScheduleWithRunLoop(hidman, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
 
-  while (CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE) ==
-         kCFRunLoopRunHandledSource) {
-    // callbacks for existing devices;
-  }
+    while (CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE) == kCFRunLoopRunHandledSource) {
+        // callbacks for existing devices;
+    }
 
-  if (!device.handle) die("game controller not detected");
+    if (!device.handle) {
+        die("game controller not detected");
+    }
 }
 
 
@@ -182,6 +218,7 @@ void send_midi(int cc, int v) {
   attempt(MIDIReceived(midiendpoint, packetList), "error sending midi");
 }
 
+#define BOUNCE_THRESH 3
 void send_cc_midi(int device_num, int device_val, int previous_val) {
   if (device_num > 5) {
     return; // duplicates
@@ -193,11 +230,15 @@ void send_cc_midi(int device_num, int device_val, int previous_val) {
     printf("shouldn't be so large: %d is %d", device_num, device_val);
     die("out of range");
   }
+    
 
   if (device_num == 4 || device_num == 5) {
-    // single axis, 0-255, left and right linear buttons
-    // send on 20 and 21
-    send_midi(20 + (device_num - 4), device_val / 2);
+      // single axis, 0-255, left and right trigger buttons
+      // send on 20 and 21
+      // prevent drifting
+      if (device_val > BOUNCE_THRESH) {
+          send_midi(20 + (device_num - 4), device_val / 2);
+      }
   } else {
     // Two joysticks (0/1 and 2/3), each with two axes.
     // These send 128 when centered, and can do 0-255.
@@ -214,37 +255,51 @@ void send_cc_midi(int device_num, int device_val, int previous_val) {
     //     down:    29
 
     if (device_val <= 128) {
-      send_midi(22 + (device_num*2), 128-device_val);
-      if (previous_val > 128) {
-        send_midi(22 + (device_num*2) + 1, 0);
-      }
+        if (128 - device_val < BOUNCE_THRESH) {
+            return;
+        }
+        
+        send_midi(22 + (device_num*2), 128-device_val);
+        if (previous_val > 128) {
+            send_midi(22 + (device_num*2) + 1, 0);
+        }
     } else {
       if (previous_val <= 128) {
         send_midi(22 + (device_num*2), 0);
       }
+        if (device_val - 128 < BOUNCE_THRESH) {
+            return;
+        }
       send_midi(22 + (device_num*2) + 1, device_val-128);
     }
   }
 }
+/**
+ Go through every element on `device`,
+ get its integer value
+ and call `send_cc_midi`
+ */
+void poll_gc(void) {
+    int v;
+    IOHIDValueRef value;
+    struct Element* element;
 
-void poll_gc() {
-  int v;
-  IOHIDValueRef value;
-  struct Element* element;
-
-  for (int i = 0; i < device.n_axes; i++) {
-    element = &device.axes[i];
-    if (IOHIDDeviceGetValue(device.handle, element->handle, &value) == kIOReturnSuccess) {
-      v = (int)IOHIDValueGetIntegerValue(value);
-      if (v != element->last_value) {
-        send_cc_midi(i, v, element->last_value);
-        element->last_value = v;
-      }
+    for (int i = 0; i < device.n_axes; i++) {
+        element = &device.axes[i];
+        if (IOHIDDeviceGetValue(device.handle, element->handle, &value) == kIOReturnSuccess) {
+            v = (int)IOHIDValueGetIntegerValue(value);
+            if (v != element->last_value) {
+                send_cc_midi(i, v, element->last_value);
+                element->last_value = v;
+            }
+        }
     }
-  }
 }
 
-void setup_midi() {
+/**
+ Create MIDIClient and MIDISource
+ */
+void setup_midi(void) {
   attempt(
     MIDIClientCreate(
      CFSTR("game controller"),
@@ -258,7 +313,10 @@ void setup_midi() {
    "creating OS-X virtual MIDI source." );
 }
 
-void setup() {
+/**
+ setup MIDI and Game Controller
+ */
+void setup(void) {
   setup_midi();
   setup_gc();
 }
